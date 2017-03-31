@@ -14,6 +14,7 @@ use FondBot\Conversation\ContextManager;
 use FondBot\Contracts\Conversation\Story;
 use FondBot\Contracts\Container\Container;
 use FondBot\Contracts\Conversation\Keyboard;
+use FondBot\Contracts\Channels\OutgoingMessage;
 use FondBot\Contracts\Conversation\Conversable;
 use FondBot\Contracts\Conversation\Interaction;
 use FondBot\Channels\Exceptions\InvalidChannelRequest;
@@ -212,10 +213,12 @@ class Bot
      * @param User          $recipient
      * @param string        $text
      * @param Keyboard|null $keyboard
+     *
+     * @return OutgoingMessage
      */
-    public function sendMessage(User $recipient, string $text, Keyboard $keyboard = null): void
+    public function sendMessage(User $recipient, string $text, Keyboard $keyboard = null): OutgoingMessage
     {
-        $this->driver->sendMessage(
+        return $this->driver->sendMessage(
             $recipient,
             $text,
             $keyboard

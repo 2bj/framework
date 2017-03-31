@@ -17,6 +17,7 @@ use FondBot\Contracts\Channels\Driver;
 use FondBot\Conversation\StoryManager;
 use FondBot\Conversation\ContextManager;
 use FondBot\Contracts\Conversation\Keyboard;
+use FondBot\Contracts\Channels\OutgoingMessage;
 use FondBot\Contracts\Channels\ReceivedMessage;
 use FondBot\Channels\Exceptions\InvalidChannelRequest;
 use FondBot\Contracts\Channels\Extensions\WebhookVerification;
@@ -141,6 +142,7 @@ class BotTest extends TestCase
 
         $this->driver->shouldReceive('sendMessage')->with($recipient, $text, $keyboard)->once();
 
-        Bot::getInstance()->sendMessage($recipient, $text, $keyboard);
+        $result = Bot::getInstance()->sendMessage($recipient, $text, $keyboard);
+        $this->assertInstanceOf(OutgoingMessage::class, $result);
     }
 }

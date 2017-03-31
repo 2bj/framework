@@ -45,6 +45,18 @@ class FacebookReceivedMessage implements ReceivedMessage
     }
 
     /**
+     * Determine if message has attachment.
+     *
+     * @return bool
+     */
+    public function hasAttachment(): bool
+    {
+        return isset($this->payload['attachments']) && collect($this->payload['attachments'])
+                ->whereIn('type', ['audio', 'file', 'image', 'video'])
+                ->count() > 0;
+    }
+
+    /**
      * Get attachment.
      *
      * @return Attachment|null

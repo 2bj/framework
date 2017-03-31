@@ -43,6 +43,7 @@ class StoryManagerTest extends TestCase
 
         $context = $this->mock(Context::class);
         $message = $this->mock(ReceivedMessage::class);
+        $message->shouldReceive('hasAttachment')->andReturn(false);
 
         $context->shouldReceive('getStory')->andReturn(null);
         $message->shouldReceive('getText')->andReturn('/start');
@@ -51,7 +52,7 @@ class StoryManagerTest extends TestCase
         $this->assertInstanceOf(FallbackStory::class, $result);
     }
 
-    public function test_find_no_story_in_context_activation_found()
+    public function test_find_no_story_in_context_activator_found()
     {
         $this->manager->add(new FakeStory());
 

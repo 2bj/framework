@@ -23,13 +23,16 @@
     "require": {
         "php": ">=7.1",
         "guzzlehttp/guzzle": "^6.2",
-        "tightenco/collect": "^5.4"
+        "spatie/regex": "^1.1",
+        "tightenco/collect": "^5.4",
+        "verbalexpressions/php-verbal-expressions": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.6",
         "mockery/mockery": "^0.9.9",
-        "phpunit/phpunit": "^5",
-        "sllh/php-cs-fixer-styleci-bridge": "^2.1"
+        "phpunit/phpunit": "^6",
+        "sllh/php-cs-fixer-styleci-bridge": "^2.1",
+        "symfony/var-dumper": "^3.2"
     },
     "autoload": {
         "psr-4": {

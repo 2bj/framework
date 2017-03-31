@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FondBot\Channels;
 
 use FondBot\Contracts\Channels\Driver;
+use FondBot\Channels\Exceptions\InvalidConfiguration;
 
 class DriverManager
 {
@@ -37,8 +38,25 @@ class DriverManager
     {
         $driver = $this->drivers[$channel->getDriver()];
 
+        $this->validateParameters($channel, $driver);
+
         $driver->fill($parameters, $request, $headers);
 
         return $driver;
+    }
+
+    /**
+     * Validate channel parameters with driver requirements.
+     *
+     * @param Channel $channel
+     * @param Driver  $driver
+     */
+    private function validateParameters(Channel $channel, Driver $driver): void
+    {
+        collect($driver->getConfig())->each(function (string $parameter) use ($channel) {
+            if (!array_key_exists($parameter, $channel->getParameters())) {
+                throw new InvalidConfiguration('Invalid `'.$channel->getName().'` channel configuration.');
+            }
+        });
     }
 }

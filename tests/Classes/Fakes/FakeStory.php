@@ -5,18 +5,35 @@ declare(strict_types=1);
 namespace Tests\Classes\Fakes;
 
 use FondBot\Conversation\Story;
+use FondBot\Contracts\Conversation\Activator;
+use FondBot\Contracts\Channels\Message\Attachment;
+use VerbalExpressions\PHPVerbalExpressions\VerbalExpressions;
 
 class FakeStory extends Story
 {
+    protected function before(): void
+    {
+    }
+
+    protected function after(): void
+    {
+    }
+
     /**
-     * Story activations.
+     * Story activators.
      *
-     * @return array
+     * @return Activator[]
      */
-    public function activations(): array
+    public function activators(): array
     {
         return [
-            '/example',
+            $this->exact('/example'),
+            $this->pattern('/\/example/'),
+            $this->pattern((new VerbalExpressions())->startOfLine()->then('/example')->endOfLine()),
+            $this->inArray(['/example']),
+            $this->inArray(collect(['/example'])),
+            $this->withAttachment(Attachment::TYPE_IMAGE),
+            $this->withAttachment(),
         ];
     }
 

@@ -31,8 +31,8 @@ class StoryManager
             return $story;
         }
 
-        // Find Story by message
-        $story = $this->findActivation($message);
+        // Find story by activator
+        $story = $this->findActivator($message);
 
         if ($story !== null) {
             return $story;
@@ -49,12 +49,13 @@ class StoryManager
      *
      * @return Story|null
      */
-    private function findActivation(ReceivedMessage $message): ?Story
+    private function findActivator(ReceivedMessage $message): ?Story
     {
         foreach ($this->stories as $story) {
-            /** @var Story $story */
-            if (in_array($message->getText(), $story->activations(), true)) {
-                return $story;
+            foreach ($story->activators() as $activator) {
+                if ($activator->matches($message) && $story->passesAuthorization()) {
+                    return $story;
+                }
             }
         }
 

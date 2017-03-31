@@ -7,26 +7,15 @@ namespace FondBot\Conversation;
 use FondBot\Bot;
 use FondBot\Traits\Loggable;
 use FondBot\Conversation\Traits\Transitions;
+use FondBot\Conversation\Traits\Authorization;
+use FondBot\Conversation\Traits\HasActivators;
 use FondBot\Contracts\Conversation\Conversable;
+use FondBot\Conversation\Traits\InteractsWithContext;
 use FondBot\Contracts\Conversation\Story as StoryContract;
 
 abstract class Story implements StoryContract, Conversable
 {
-    use Transitions, Loggable;
-
-    /**
-     * Do something before running Story.
-     */
-    protected function before(): void
-    {
-    }
-
-    /**
-     * Do something after running Story.
-     */
-    protected function after(): void
-    {
-    }
+    use Authorization, InteractsWithContext, HasActivators, Transitions, Loggable;
 
     /**
      * Handle story.
@@ -38,11 +27,15 @@ abstract class Story implements StoryContract, Conversable
         $this->debug('handle');
         $this->bot = $bot;
 
-        $this->before();
+        if (method_exists($this, 'before')) {
+            $this->before();
+        }
 
         // Run first interaction of the story
         $this->jump($this->firstInteraction());
 
-        $this->after();
+        if (method_exists($this, 'after')) {
+            $this->after();
+        }
     }
 }
