@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace FondBot\Channels\Slack;
 
@@ -16,10 +17,9 @@ class SlackOutgoingMessage implements OutgoingMessage
     public function __construct(User $recipient, $text, Keyboard $keyboard = null)
     {
         $this->recipient = $recipient;
-        $this->text      = $text;
-        $this->keyboard  = $keyboard;
+        $this->text = $text;
+        $this->keyboard = $keyboard;
     }
-
 
     /**
      * Get recipient.
@@ -60,8 +60,7 @@ class SlackOutgoingMessage implements OutgoingMessage
     {
         return [
             'channel' => $this->recipient->getId(),
-            'text'    => $this->text
+            'text'    => $this->text,
         ];
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace FondBot\Channels\Slack;
 
@@ -17,8 +17,8 @@ class SlackReceivedMessage implements ReceivedMessage
 
     public function __construct(Client $guzzle, string $token, array $payload)
     {
-        $this->guzzle  = $guzzle;
-        $this->token   = $token;
+        $this->guzzle = $guzzle;
+        $this->token = $token;
         $this->payload = $payload;
     }
 

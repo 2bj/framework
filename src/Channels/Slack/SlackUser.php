@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace FondBot\Channels\Slack;
 
 use FondBot\Contracts\Channels\User;
@@ -30,7 +32,7 @@ class SlackUser implements User
      */
     public function getName(): ?string
     {
-        return $this->payload['user']['profile']['first_name'] . ' ' . $this->payload['user']['profile']['last_name'];
+        return $this->payload['user']['profile']['first_name'].' '.$this->payload['user']['profile']['last_name'];
     }
 
     /**
@@ -43,8 +45,3 @@ class SlackUser implements User
         return $this->payload['user']['name'];
     }
 }
-
-
-
-
-
